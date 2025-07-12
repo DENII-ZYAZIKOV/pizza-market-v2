@@ -1,25 +1,68 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CartItem from "../components/CartItem";
 
 import CartEmpty from "../components/CartEmpty";
 import React from "react";
 import { RootState } from "../redux/store";
-import { clearItems } from "../redux/slices/cartSlice";
+import {
+  clearItems,
+  CartItem as CartItemType,
+} from "../redux/slices/cartSlice";
+import Modal from "../components/Modal";
+import OrderForm from "../components/OrderForm";
 
 const Cart: React.FC = () => {
   const { items, totalPrice } = useSelector(
     (state: RootState) => state.cartSlice
   );
   const totalCount = items.reduce(
-    (sum: number, item: any) => sum + item.count,
+    (sum: number, item: CartItemType) => sum + item.count,
     0
   );
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [orderAccepted, setOrderAccepted] = React.useState(false);
+  const [showModal, setShowModal] = React.useState(false);
+  const [showOrderForm, setShowOrderForm] = React.useState(false);
   function onClickClear() {
     dispatch(clearItems());
   }
 
+  function onPay() {
+    setShowOrderForm(true);
+  }
+
+  function handleOrderFormSubmit(data: {
+    name: string;
+    phone: string;
+    email: string;
+  }) {
+    dispatch(clearItems());
+    setOrderAccepted(true);
+    setShowModal(true);
+    setShowOrderForm(false);
+    setTimeout(() => {
+      setShowModal(false);
+      navigate("/");
+    }, 2500);
+  }
+
+  if (showOrderForm) {
+    return <OrderForm onSubmit={handleOrderFormSubmit} />;
+  }
+  if (orderAccepted) {
+    // Показываем модалку вместо отдельного блока
+    return (
+      <>
+        <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+          <h2>Спасибо за заказ! Ваш заказ принят.</h2>
+          <p>Мы уже начали готовить вашу пиццу 🍕</p>
+        </Modal>
+        <CartEmpty />
+      </>
+    );
+  }
   if (!totalPrice) return <CartEmpty />;
   return (
     <div className="cart">
@@ -98,7 +141,7 @@ const Cart: React.FC = () => {
         </div>
       </div>
       <div className="cart__items">
-        {items.map((item: any) => (
+        {items.map((item: CartItemType) => (
           <CartItem key={item.id} {...item} />
         ))}
       </div>
@@ -134,7 +177,7 @@ const Cart: React.FC = () => {
 
             <span>Вернуться назад</span>
           </Link>
-          <div className="button pay-btn">
+          <div className="button pay-btn" onClick={onPay}>
             <span>Оплатить сейчас</span>
           </div>
         </div>

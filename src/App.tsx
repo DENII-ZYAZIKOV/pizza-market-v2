@@ -5,6 +5,7 @@ import "./scss/app.scss";
 import Layout from "./components/Layout";
 import Cart from "./pages/Cart";
 import React from "react";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <ErrorBoundary>
+      <RouterProvider router={router} />
+    </ErrorBoundary>
+  );
 }
 
 export default App;

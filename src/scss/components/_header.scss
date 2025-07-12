@@ -1,4 +1,4 @@
-@import "../variables";
+@use "../variables" as *;
 
 .header {
   border-bottom: 1px solid $gray-line;
@@ -11,17 +11,32 @@
 
     @media (max-width: 645px) {
       flex-direction: column;
-      .header__cart{
+      .header__cart {
         margin-top: 20px;
       }
+    }
+
+    @media (max-width: 480px) {
+      gap: 15px;
     }
   }
 
   &__logo {
     display: flex;
 
+    @media (max-width: 480px) {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
     img {
       margin-right: 15px;
+
+      @media (max-width: 480px) {
+        margin-right: 0;
+        margin-bottom: 10px;
+      }
     }
 
     h1 {
@@ -30,10 +45,26 @@
       letter-spacing: 1%;
       text-transform: uppercase;
       font-weight: 800;
+
+      @media (max-width: 768px) {
+        font-size: 22px;
+      }
+
+      @media (max-width: 480px) {
+        font-size: 20px;
+      }
     }
 
     p {
       color: #7b7b7b;
+
+      @media (max-width: 768px) {
+        font-size: 14px;
+      }
+
+      @media (max-width: 480px) {
+        font-size: 12px;
+      }
     }
   }
 }

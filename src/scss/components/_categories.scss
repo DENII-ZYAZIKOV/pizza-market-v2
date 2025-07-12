@@ -1,4 +1,6 @@
-@import '../variables';
+@use "../variables" as *;
+@use "../libs/normalize" as normalize;
+@use "sass:color";
 
 .categories {
   ul {
@@ -6,20 +8,16 @@
 
     li {
       background-color: #f9f9f9;
-      padding: 13px 30px;
       border-radius: 30px;
+      padding: 13px 30px;
       margin-right: 10px;
       font-weight: bold;
       cursor: pointer;
       transition: background-color 0.1s ease-in-out;
-      @include noselect();
+      @include normalize.noselect();
 
       &:hover {
-        background-color: darken(#f9f9f9, 2%);
-      }
-
-      &:active {
-        background-color: darken(#f9f9f9, 5%);
+        background-color: color.adjust($color: #f9f9f9, $lightness: -5%);
       }
 
       &.active {

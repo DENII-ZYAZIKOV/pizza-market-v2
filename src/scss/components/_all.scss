@@ -1,5 +1,5 @@
-@import "./header.scss";
-@import "./button.scss";
-@import "./categories.scss";
-@import "./sort.scss";
-@import "./pizza-block.scss";
+@use "./header.scss" as *;
+@use "./button.scss" as *;
+@use "./categories.scss" as *;
+@use "./sort.scss" as *;
+@use "./pizza-block.scss" as *;

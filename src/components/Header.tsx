@@ -3,6 +3,7 @@ import Search from "./Search/Search";
 import { useSelector } from "react-redux";
 import React, { useEffect, useRef } from "react";
 import { RootState } from "../redux/store";
+import { CartItem } from "../redux/slices/cartSlice";
 
 const Header: React.FC = () => {
   const isMounted = useRef(false);
@@ -10,7 +11,7 @@ const Header: React.FC = () => {
     (state: RootState) => state.cartSlice
   );
   const totalCount = items.reduce(
-    (sum: number, item: any) => sum + item.count,
+    (sum: number, item: CartItem) => sum + item.count,
     0
   );
   useEffect(() => {

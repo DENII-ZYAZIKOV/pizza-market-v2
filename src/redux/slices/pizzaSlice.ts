@@ -23,15 +23,22 @@ type FetchPizzasArgs = {
   sortProperty: string;
   page?: number;
   limit?: number;
+  search?: string;
 };
 
 export const fetchPizzas = createAsyncThunk(
   "pizza/fetchPizzas",
   async (params: FetchPizzasArgs) => {
-    const { categoryid, sortProperty, page = 1, limit = 8 } = params;
-    const { data } = await axios.get<Pizza[]>(
-      `https://667429ec75872d0e0a955cf5.mockapi.io/items?category=${categoryid}&sortBy=${sortProperty}&order=desc&page=${page}&limit=${limit}`
-    );
+    const {
+      categoryid,
+      sortProperty,
+      page = 1,
+      limit = 8,
+      search = "",
+    } = params;
+    const searchParam = search ? `&title=${encodeURIComponent(search)}` : "";
+    const url = `https://667429ec75872d0e0a955cf5.mockapi.io/items?category=${categoryid}&sortBy=${sortProperty}&order=desc&page=${page}&limit=${limit}${searchParam}`;
+    const { data } = await axios.get<Pizza[]>(url);
     return { data, page, limit };
   }
 );

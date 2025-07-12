@@ -18,8 +18,10 @@ const Search: React.FC = () => {
   );
 
   const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-    updateSearchValue(event.target.value);
+    const newValue = event.target.value;
+    console.log("Search input changed:", newValue);
+    setValue(newValue);
+    updateSearchValue(newValue);
   };
 
   return (
@@ -29,9 +31,9 @@ const Search: React.FC = () => {
         fill="none"
         height="24"
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
         viewBox="0 0 24 24"
         width="24"
         xmlns="http://www.w3.org/2000/svg"

@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 export const store = configureStore({
   reducer: {
     filterSlice,
-    SearchSlice,
+    searchSlice: SearchSlice,
     cartSlice,
     pizzaSlice,
   },
